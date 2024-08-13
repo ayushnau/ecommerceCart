@@ -1,224 +1,156 @@
+"use client";
 import React from "react";
-import { Disclosure, DisclosureButton, Menu } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ChevronDown } from "icons";
+import { Disclosure } from "@headlessui/react";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import Image from "next/image";
+import { MagnifyingGlassIcon, CartIcon } from "icons";
 
-function classNames(...classes: any): any {
-	return classes.filter(Boolean).join(" ");
+function classNames(...classes: any): string {
+  return classes.filter(Boolean).join(" ");
 }
+
 const Navbar = () => {
-	return (
-		<Disclosure as="nav" className="bg-gray-800">
-			{({ open }) => (
-				<>
-					<div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-						<div className="flex h-16 items-center justify-between">
-							<div className="flex items-center">
-								<div className="flex-shrink-0">
-									<img
-										className="h-8 w-auto"
-										src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-										alt="Your Company"
-									/>
-								</div>
-								<div className="hidden sm:ml-6 sm:block">
-									<div className="flex space-x-4">
-										{/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-										<a
-											href="#"
-											className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
-										>
-											Dashboard
-										</a>
-										<a
-											href="#"
-											className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-										>
-											Browse
-										</a>
-										<a
-											href="#"
-											className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-										>
-											Resources
-										</a>
-										<a
-											href="#"
-											className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-										>
-											<div className="flex items-center justify-center gap-x-[1px]">
-												Publish <ChevronDown className={"text-gray-300"} />
-											</div>
-										</a>
-									</div>
-								</div>
-							</div>
-							<div className="hidden sm:ml-6 sm:block">
-								<div className="flex items-center">
-									<button
-										type="button"
-										className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-									>
-										<span className="absolute -inset-1.5" />
-										<span className="sr-only">View notifications</span>
-										<BellIcon className="h-6 w-6" aria-hidden="true" />
-									</button>
+  return (
+    <Disclosure as="nav" className="bg-[#2874F0]">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center justify-between">
+              <div className="flex items-center flex-1">
+                {/* Logo */}
+                <div className="flex-shrink-0">
+                  <Link href="/" passHref>
+                    <Image
+                      className="h-8 w-auto"
+                      src="https://seeklogo.com/images/F/flipkart-logo-3F33927DAA-seeklogo.com.png"
+                      alt="Flipkart"
+                      width={32} // Example width
+                      height={32} // Example height
+                    />
+                  </Link>
+                </div>
+                <div className="flex-1 mx-4 max-w-xl">
+                  <div className="relative hidden sm:block">
+                    <input
+                      type="text"
+                      placeholder="Search for products, brands and more"
+                      className="w-full p-2 pl-4 rounded-l-md rounded-r-md"
+                    />
+                    <button className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md">
+                      <MagnifyingGlassIcon />
+                    </button>
+                  </div>
+                </div>
+              </div>
 
-									{/* Profile dropdown */}
-									<Menu as="div" className="relative ml-3">
-										<div>
-											<Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-												<span className="absolute -inset-1.5" />
-												<span className="sr-only">Open user menu</span>
-												<img
-													className="h-8 w-8 rounded-full"
-													src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-													alt=""
-												/>
-											</Menu.Button>
-										</div>
-										<Menu.Items
-											transition
-											className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-										>
-											<Menu.Item>
-												{({ focus }) => (
-													<a
-														href="#"
-														className={classNames(
-															focus ? "bg-gray-100" : "",
-															"block px-4 py-2 text-sm text-gray-700",
-														)}
-													>
-														Your Profile
-													</a>
-												)}
-											</Menu.Item>
-											<Menu.Item>
-												{({ focus }) => (
-													<a
-														href="#"
-														className={classNames(
-															focus ? "bg-gray-100" : "",
-															"block px-4 py-2 text-sm text-gray-700",
-														)}
-													>
-														Settings
-													</a>
-												)}
-											</Menu.Item>
-											<Menu.Item>
-												{({ focus }) => (
-													<a
-														href="#"
-														className={classNames(
-															focus ? "bg-gray-100" : "",
-															"block px-4 py-2 text-sm text-gray-700",
-														)}
-													>
-														Sign out
-													</a>
-												)}
-											</Menu.Item>
-										</Menu.Items>
-									</Menu>
-								</div>
-							</div>
-							<div className="-mr-2 flex sm:hidden">
-								{/* Mobile menu button */}
-								<DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-									<span className="absolute -inset-0.5" />
-									<span className="sr-only">Open main menu</span>
-									{open ? (
-										<XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-									) : (
-										<Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-									)}
-								</DisclosureButton>
-							</div>
-						</div>
-					</div>
+              {/* Desktop Search Bar */}
 
-					<Disclosure.Panel className="sm:hidden">
-						<div className="space-y-1 px-2 pb-3 pt-2">
-							{/* Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" */}
-							<DisclosureButton
-								as="a"
-								href="#"
-								className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
-							>
-								Browse
-							</DisclosureButton>
-							<DisclosureButton
-								as="a"
-								href="#"
-								className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-							>
-								Resources
-							</DisclosureButton>
-							<DisclosureButton
-								as="a"
-								href="#"
-								className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-							>
-								Publish
-							</DisclosureButton>
-						</div>
-						<div className="border-t border-gray-700 pb-3 pt-4">
-							<div className="flex items-center px-5">
-								<div className="flex-shrink-0">
-									<img
-										className="h-10 w-10 rounded-full"
-										src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-										alt=""
-									/>
-								</div>
-								<div className="ml-3">
-									<div className="text-base font-medium text-white">
-										Ayush Nautiyal
-									</div>
-									<div className="text-sm font-medium text-gray-400">
-										ayushnautiyaldeveloper@gmail.com
-									</div>
-								</div>
-								<button
-									type="button"
-									className="relative ml-auto flex-shrink-0 rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-								>
-									<span className="absolute -inset-1.5" />
-									<span className="sr-only">View notifications</span>
-									<BellIcon className="h-6 w-6" aria-hidden="true" />
-								</button>
-							</div>
-							<div className="mt-3 space-y-1 px-2">
-								<DisclosureButton
-									as="a"
-									href="#"
-									className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-								>
-									Your Profile
-								</DisclosureButton>
-								<DisclosureButton
-									as="a"
-									href="#"
-									className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-								>
-									Settings
-								</DisclosureButton>
-								<DisclosureButton
-									as="a"
-									href="#"
-									className="block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white"
-								>
-									Sign out
-								</DisclosureButton>
-							</div>
-						</div>
-					</Disclosure.Panel>
-				</>
-			)}
-		</Disclosure>
-	);
+              {/* Desktop Profile and Cart Icons */}
+              <div className="items-center space-x-6 flex">
+                <div className="hidden sm:flex items-center">
+                  <Link
+                    href="/profile"
+                    className="flex items-center text-white"
+                  >
+                    {/* <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 18.75a9 9 0 1115 0v.75H4.5v-.75z"
+                      />
+                    </svg> */}
+                    <img
+                      width="20"
+                      height="20"
+                      src="https://img.icons8.com/ffffff/external-kmg-design-glyph-kmg-design/32/external-login-ui-essentials-kmg-design-glyph-kmg-design.png"
+                      alt="external-login-ui-essentials-kmg-design-glyph-kmg-design"
+                    />
+                    <span className="ml-2">Login</span>
+                  </Link>
+                </div>
+                <Link
+                  href="/cart"
+                  className="flex items-center text-white pr-2"
+                >
+                  <CartIcon />
+                  <span className="ml-2">Cart</span>
+                </Link>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <div className="-mr-2 flex sm:hidden">
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Dropdown */}
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-3 px-2 pb-3 pt-2">
+              {/* Mobile Search Bar */}
+              <Disclosure.Button as="div" className="block">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Search for products, brands and more"
+                    className="w-full p-2 pl-4 rounded-l-md"
+                  />
+                  <button className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md">
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </Disclosure.Button>
+
+              {/* Mobile Login Button */}
+              <Disclosure.Button
+                as={Link}
+                href="/profile"
+                className="block rounded-md hover:bg-blue-900 px-3 py-2 text-base font-medium text-white pt-2"
+              >
+                <img
+                  className="inline mr-1"
+                  width="20"
+                  height="20"
+                  src="https://img.icons8.com/ffffff/external-kmg-design-glyph-kmg-design/32/external-login-ui-essentials-kmg-design-glyph-kmg-design.png"
+                  alt="external-login-ui-essentials-kmg-design-glyph-kmg-design"
+                />
+                Login
+              </Disclosure.Button>
+            </div>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
+  );
 };
 
 export default Navbar;
