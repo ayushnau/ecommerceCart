@@ -1,6 +1,6 @@
 import React from "react";
 
-const MagnifyingGlassIcon: any = () => {
+const MagnifyingGlassIcon: React.FC = () => {
   return (
     <svg
       className="w-5 h-5"

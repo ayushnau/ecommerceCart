@@ -4,7 +4,7 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
-import { MagnifyingGlassIcon, CartIcon } from "icons";
+import { MagnifyingGlassIcon, CartIcon, LoginIcon } from "icons";
 
 function classNames(...classes: any): string {
   return classes.filter(Boolean).join(" ");
@@ -12,7 +12,7 @@ function classNames(...classes: any): string {
 
 const Navbar = () => {
   return (
-    <Disclosure as="nav" className="bg-[#2874F0]">
+    <Disclosure as="nav" className="bg-[#2874F0] shadow-boxShadow">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -37,6 +37,7 @@ const Navbar = () => {
                       placeholder="Search for products, brands and more"
                       className="w-full p-2 pl-4 rounded-l-md rounded-r-md"
                     />
+
                     <button className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md">
                       <MagnifyingGlassIcon />
                     </button>
@@ -53,26 +54,7 @@ const Navbar = () => {
                     href="/profile"
                     className="flex items-center text-white"
                   >
-                    {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.5 18.75a9 9 0 1115 0v.75H4.5v-.75z"
-                      />
-                    </svg> */}
-                    <img
-                      width="20"
-                      height="20"
-                      src="https://img.icons8.com/ffffff/external-kmg-design-glyph-kmg-design/32/external-login-ui-essentials-kmg-design-glyph-kmg-design.png"
-                      alt="external-login-ui-essentials-kmg-design-glyph-kmg-design"
-                    />
+                    <LoginIcon />
                     <span className="ml-2">Login</span>
                   </Link>
                 </div>
@@ -109,10 +91,15 @@ const Navbar = () => {
                   <input
                     type="text"
                     placeholder="Search for products, brands and more"
-                    className="w-full p-2 pl-4 rounded-l-md"
+                    className="w-full p-2 pl-4 rounded-l-md rounded-r-md"
+                    onClick={(e: any) => e.stopPropagation()}
                   />
-                  <button className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md">
-                    <svg
+                  <button
+                    onClick={(e: any) => e.stopPropagation()}
+                    className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md"
+                  >
+                    <MagnifyingGlassIcon />
+                    {/* <svg
                       className="w-5 h-5"
                       fill="none"
                       stroke="currentColor"
@@ -120,12 +107,12 @@ const Navbar = () => {
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
                         d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z"
-                      />
-                    </svg>
+                      ></path>
+                    </svg> */}
                   </button>
                 </div>
               </Disclosure.Button>
@@ -136,13 +123,7 @@ const Navbar = () => {
                 href="/profile"
                 className="block rounded-md hover:bg-blue-900 px-3 py-2 text-base font-medium text-white pt-2"
               >
-                <img
-                  className="inline mr-1"
-                  width="20"
-                  height="20"
-                  src="https://img.icons8.com/ffffff/external-kmg-design-glyph-kmg-design/32/external-login-ui-essentials-kmg-design-glyph-kmg-design.png"
-                  alt="external-login-ui-essentials-kmg-design-glyph-kmg-design"
-                />
+                <LoginIcon />
                 Login
               </Disclosure.Button>
             </div>

@@ -19,6 +19,14 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+				boxShadow:
+					"0px -16px 75px 0px rgba(0, 0, 0, 0.10), 0px 10px 20px 0px rgba(0, 0, 0, 0.05)",
+				// box: " 0px 16px 75px 0px rgba(0, 0, 0, 0.10), 0px 10px 20px 0px rgba(0, 0, 0, 0.05)",
+				// boxShadow2: "0px 23px 50px 0px rgba(0, 0, 0, 0.10)",
+				// menu: "0px 36px 75px 0px rgba(0, 0, 0, 0.14), 0px 10px 20px 0px rgba(0, 0, 0, 0.10)",
+				// sidebar: "2px 0px 10px 0px rgba(0, 0, 0, 0.10);",
+			},
     },
   },
   plugins: [],
