@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --concurrency 15",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "preview": "turbo run preview",
+    "web:dev": "turbo run web#dev",
+    "backend:serve": "turbo run backend#serve",
+    "start": "npx run concurrently \"yarn web:dev\"  \"yarn backend:serve\""
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.16",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "*",
+    "postcss": "^8.4.31",
+    "prettier": "^2.5.1",
+    "tailwindcss": "^3.3.3",
+    "turbo": "^1.9.7"
+  },
+  "name": "webapp-template",
+  "packageManager": "yarn@1.22.19",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+}

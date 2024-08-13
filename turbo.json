@@ -1,0 +1,47 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env.*local"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "wiredup#dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "web#dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "backend#db:migration": { "cache": false },
+    "backend#db:migrate": { "cache": false },
+    "backend#db:rollback": { "cache": false },
+    "backend#serve": { "cache": false },
+
+    "wiredup#build:staging": {
+      "cache": false
+    },
+    "wiredup#build:production": {
+      "cache": false
+    },
+    "wiredup#preview": {
+      "cache": false
+    },
+    "wiredup-web#dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "wiredup-web#build:staging": {
+      "cache": false
+    },
+    "wiredup-web#build:production": {
+      "cache": false
+    }
+  }
+}
