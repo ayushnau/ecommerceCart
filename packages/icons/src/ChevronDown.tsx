@@ -1,28 +1,28 @@
 import React from "react";
 interface ChevronProps {
-	className?: any;
-	strokeColor?:any
+  className?: any;
+  fillColor?: any;
 }
 
-const ChevronDown: React.FC<ChevronProps> = ({ className = "", strokeColor="#D1D5DB" }) => {
-	return (
-		<svg
-			className={className}
-			width="13"
-			height="12"
-			viewBox="0 0 13 12"
-			fill="none"
-			xmlns="http://www.w3.org/2000/svg"
-		>
-			<path
-				d="M3.05762 4.50012L6.49512 7.93762L9.93262 4.50012"
-				stroke={strokeColor}
-				strokeWidth="2"
-				strokeLinecap="round"
-				strokeLinejoin="round"
-			/>
-		</svg>
-	);
+const ChevronDown: React.FC<ChevronProps> = ({
+  className = "",
+  fillColor = "#878787",
+}) => {
+  return (
+    <svg
+      width="16"
+      height="27"
+      viewBox="0 0 16 27"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        d="M16 23.207L6.11 13.161 16 3.093 12.955 0 0 13.161l12.955 13.161z"
+        fill={fillColor}
+        className="SV+H35"
+      ></path>
+    </svg>
+  );
 };
 
 export default ChevronDown;

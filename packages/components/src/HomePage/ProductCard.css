@@ -1,0 +1,36 @@
+@keyframes fadeOutSlideRight {
+    0% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(8px);
+    }
+  }
+  
+  @keyframes fadeInSlideLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .fade-out-slide-right {
+    animation: fadeOutSlideRight 0.3s forwards;
+  }
+  
+  .fade-in-slide-left {
+    animation: fadeInSlideLeft 0.3s forwards;
+  }
+  
+  .hidden-opacity {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  

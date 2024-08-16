@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export const publicationUserSlice = createSlice({
 	name: "publicationUserSlice",
 	initialState: {
-		uuid: "",
+		uuid: "2345324",
 		username: "",
 		email: "",
 		role: "",

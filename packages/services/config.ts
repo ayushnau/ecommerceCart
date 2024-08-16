@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
 	function (error) {
 		console.log(">>>Error encountered in axios call", setAlertName, webStore);
 		if (error.message.includes("429")) {
-			const state = webStore.getState();
+			// const state = webStore.getState();
 			webStore.dispatch(setAlertName("429ERROR"));
 		}
 		//  else if (error.message.includes("403")) {
