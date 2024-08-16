@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -14,12 +14,17 @@ function classNames(...classes: any): string {
 
 const Navbar = () => {
   const cartItems = useSelector((state: StoreState) => {
-    return state.cartItemsSlice.cartItems;
+    return state.cartItemsSlice;
   });
-  const cartItemsList = cartItems ? Object.values(cartItems) : [];
-  const totalQuantity = cartItemsList.reduce((total, item) => {
-    return total + Number(item.quantity);
-  }, 10);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  useEffect(() => {
+    const cartItemsList = cartItems ? Object.values(cartItems) : [];
+    console.log({ cartItemsList }, { cartItems });
+    const quantity = cartItemsList.reduce((total, item) => {
+      return total + Number(item.quantity);
+    }, 0);
+    setTotalQuantity(quantity);
+  }, [cartItems]);
 
   return (
     <Disclosure as="nav" className="bg-[#2874F0] shadow-boxShadow">

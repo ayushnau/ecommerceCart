@@ -7,6 +7,7 @@ import "./ProductCard.css";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setCartItem, StoreState } from "store";
+import { formatNumber } from "utils";
 
 interface ProductCardInterface {
   cardDetails: any;
@@ -16,22 +17,24 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
     cardDetails.images[0]
   );
   const dispatch = useDispatch();
-  const [isAdded, setIsAdded] = useState(false);
   const currentQuantity = useSelector((state: StoreState) => {
     const id: string = cardDetails.id;
     return state.cartItemsSlice[id]?.quantity;
   });
+  const [isAdded, setIsAdded] = useState<boolean>(
+    currentQuantity ? true : false
+  );
 
   const handleAddToCart = () => {
-    console.log("working fine");
-    console.log({ cardDetails });
+    const addOrDeduct = isAdded ? -1 : 1;
     setIsAdded((prev) => !prev);
     const id: string = cardDetails.id;
+    const quantity = currentQuantity ?? "0";
+    console.log({ quantity });
     dispatch(
       setCartItem({
         id,
-        quantity:
-          currentQuantity != "0" ? `${Number(currentQuantity) + 1}` : "1",
+        quantity: `${parseInt(quantity) + addOrDeduct}`,
       })
     );
   };
@@ -71,14 +74,17 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
           </div>
           <div className="">
             <span className="text-base font-medium leading-[1.4] text-prmary-text-black">
-              ₹{cardDetails.price}
+              ₹{formatNumber(cardDetails.price)}
             </span>
             <span className="mx-2 line-through text-secondary-text-gray text-sm">
               ₹
-              {(
-                (+cardDetails.price / (100 - +cardDetails.discountPercentage)) *
-                100
-              ).toFixed(1)}
+              {formatNumber(
+                (
+                  (+cardDetails.price /
+                    (100 - +cardDetails.discountPercentage)) *
+                  100
+                ).toFixed(1)
+              )}
             </span>
             <span className="text-secondary-emerald-green text-[13px] font-medium">
               {cardDetails.discountPercentage}% Off
@@ -129,7 +135,7 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
             {isAdded && (
               <button
                 onClick={handleAddToCart}
-                className="whitespace-nowrap cursor-pointer flex items-center gap-2 text-green-400 text-sm font-medium py-2 px-4 rounded-full fade-in-slide-left"
+                className="whitespace-nowrap cursor-pointer flex items-center gap-2 text-green-600 text-sm font-medium py-2 px-4 rounded-full fade-in-slide-left"
               >
                 {/* <CheckIcon className="inline fade-in-slide-left" /> */}
                 <Image

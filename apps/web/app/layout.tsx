@@ -16,10 +16,10 @@ export default function RootLayout({
   // const { store } = initializeStore({});
 
   return (
-    <StoreProvider>
-      <html lang="en">
-        <body className={inter.className}>{children}</body>
-      </html>
-    </StoreProvider>
+    <html lang="en">
+      <body className={inter.className}>
+        <StoreProvider>{children}</StoreProvider>
+      </body>
+    </html>
   );
 }
