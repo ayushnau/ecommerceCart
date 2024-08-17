@@ -14,7 +14,7 @@ function classNames(...classes: any): string {
 
 const Navbar = () => {
   const cartItems = useSelector((state: StoreState) => {
-    return state.cartItemsSlice;
+    return state.cartItemsSlice.items;
   });
   const [totalQuantity, setTotalQuantity] = useState(0);
   useEffect(() => {

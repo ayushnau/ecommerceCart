@@ -1,9 +1,12 @@
 import React from "react";
 import { Sidebar, ProductCard } from "components";
+import { useSelector } from "react-redux";
+import { StoreState } from "store";
 
 const Listing = async () => {
   const response = await fetch("https://dummyjson.com/products/search?q=watch");
   const data = await response.json();
+
   return (
     <div className="p-4 flex items-center justify-center  overflow-scroll">
       <div className="flex gap-x-[50px]">

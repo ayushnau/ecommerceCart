@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { twMerge } from "tailwind-merge";
 import { useSelector, useDispatch } from "react-redux";
-import { StoreState, setCartItem } from "store";
+import { StoreState, setCartItem, removeCartItem } from "store";
 import { formatNumber } from "utils";
+import { ConfirmationModal } from "components";
 
 interface CartCardInterface {
   cardDetails: any;
@@ -15,39 +16,42 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
   const [selectedImage, setSelectedImage] = useState<any>(
     cardDetails.images[0]
   );
+  const [isConfirmationModalOpen, setIsConfirmationModal] =
+    useState<boolean>(false);
   const currentQuantity = useSelector((state: StoreState) => {
     const id: string = cardDetails.id;
-    return state.cartItemsSlice[id]?.quantity;
+    return state.cartItemsSlice.items[id]?.quantity;
   });
 
   const handleQuantityChange = (value: "add" | "remove") => {
     const id: string = cardDetails.id;
-    const quantity = currentQuantity ?? "0";
-    const addOrDeduct = value == "add" ? 1 : -1;
-    console.log({ quantity, value, addOrDeduct });
-    console.log("asdfasdfa", {
-      ...cardDetails,
-      id,
-      quantity23456654: `${parseInt(quantity) + addOrDeduct}`,
-    });
-
-    dispatch(
-      setCartItem({
-        id,
-        ...cardDetails,
-        quantity: `${parseInt(quantity) + addOrDeduct}`,
-      })
-    );
+    const addOrDeduct = value === "add" ? 1 : -1;
+    if (value === "remove" && currentQuantity === "1") {
+      setIsConfirmationModal(true);
+    } else {
+      dispatch(
+        setCartItem({
+          id,
+          ...cardDetails,
+          quantity: `${parseInt(currentQuantity) + addOrDeduct}`,
+        })
+      );
+    }
   };
+  const handleRemoveItem = () => {
+    const id: string = cardDetails.id;
+    dispatch(removeCartItem(id));
+  };
+
   return (
-    <div className="flex items-center p-4 border-b border-gray-200 w-[600px]">
+    <div className="flex items-center flex-col lg:flex-row p-4 border-b border-gray-200 w-full lg:w-[600px]">
       <div className="flex-shrink-0">
         <Image
           src={selectedImage}
           width={200}
           height={400}
           alt={cardDetails.title}
-          className="object-fill"
+          className="object-contain"
         />
       </div>
       <div className="ml-4 flex-grow">
@@ -84,14 +88,24 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
             {currentQuantity}
           </span>
           <button
-            onClick={() => {
-              handleQuantityChange("add");
-            }}
+            onClick={() => handleQuantityChange("add")}
             className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-600 text-sm font-medium rounded-r hover:bg-gray-300"
           >
             +
           </button>
+          <button
+            onClick={() => setIsConfirmationModal(true)}
+            className="ml-4 w-24 h-8 flex items-center justify-center bg-red-500 text-white text-sm font-medium rounded hover:bg-red-600"
+          >
+            Remove
+          </button>
         </div>
+        {isConfirmationModalOpen && (
+          <ConfirmationModal
+            onConfirm={handleRemoveItem}
+            onCancel={() => setIsConfirmationModal(false)}
+          />
+        )}
       </div>
     </div>
   );

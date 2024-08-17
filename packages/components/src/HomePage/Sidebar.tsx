@@ -15,7 +15,7 @@ const Sidebar: React.FC<SidebarInterface> = () => {
   //   console.log("Price range:", newRange);
   // };
   return (
-    <div className=" primary-text-black w-[270px] shadow-boxShadow hidden xl:block">
+    <div className=" primary-text-black w-[270px] shadow-boxShadow hidden xl:block self-start ">
       {/* Filters Title */}
       <div className="p-4">
         <h3 className="text-lg font-medium text-primary-text-black">Filters</h3>

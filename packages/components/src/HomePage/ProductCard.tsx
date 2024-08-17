@@ -19,7 +19,7 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
   const dispatch = useDispatch();
   const currentQuantity = useSelector((state: StoreState) => {
     const id: string = cardDetails.id;
-    return state.cartItemsSlice[id]?.quantity;
+    return state.cartItemsSlice.items[id]?.quantity;
   });
   const [isAdded, setIsAdded] = useState<boolean>(
     currentQuantity ? true : false
@@ -30,11 +30,17 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
     setIsAdded((prev) => !prev);
     const id: string = cardDetails.id;
     const quantity = currentQuantity ?? "0";
-    console.log({ quantity });
+    // console.log({ quantity });
+    console.log("asdfasdfa", {
+      ...cardDetails,
+      id,
+      quantity23456654: `${parseInt(quantity) + addOrDeduct}`,
+    });
     dispatch(
       setCartItem({
         id,
         quantity: `${parseInt(quantity) + addOrDeduct}`,
+        ...cardDetails,
       })
     );
   };
@@ -73,7 +79,7 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
             />
           </div>
           <div className="">
-            <span className="text-base font-medium leading-[1.4] text-prmary-text-black">
+            <span className="text-base font-medium leading-[1.4] text-primary-text-black">
               ₹{formatNumber(cardDetails.price)}
             </span>
             <span className="mx-2 line-through text-secondary-text-gray text-sm">

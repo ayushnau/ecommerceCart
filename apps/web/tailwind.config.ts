@@ -13,7 +13,7 @@ const config: Config = {
         "primary-blue" : "#2874F0",
         "secondary-yellow":"#FFDF00",
         "secondary-gray":"#333333",
-        "prmary-text-black":"#212121",
+        "primary-text-black":"#212121",
         "secondary-text-gray":"#878787",
         "secondary-emerald-green":"#388e3c",
         "secondary-purple":"#7048C6"
