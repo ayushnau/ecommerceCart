@@ -27,6 +27,7 @@ const Navbar = () => {
   });
   const [dropdownOpen, setDropdownOpen] = useState(false); // Manage dropdown state
 
+
   useEffect(() => {
     const cartItemsList = cartItems ? Object.values(cartItems) : [];
     const quantity = cartItemsList.reduce((total, item) => {
@@ -95,7 +96,21 @@ const Navbar = () => {
                       className="w-full p-2 pl-4 rounded-l-md rounded-r-md"
                     />
                     <button className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md">
-                      <MagnifyingGlassIcon />
+                      {/* <MagnifyingGlassIcon /> */}
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z"
+                        />
+                      </svg>
                     </button>
                   </div>
                 </div>

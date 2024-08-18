@@ -7,13 +7,15 @@ import { clearCartItems, StoreState } from "store";
 import OrderConfirmationModal from "../../misc/OrderConfirmtionModal";
 import LoginPromptModal from "../../misc/LoginPromptModal";
 import { useRouter } from "next/navigation";
-import { useAuth } from "services";
+import { clearCart, useAuth } from "services";
 
 const CardList: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const auth = useAuth();
-  const cartItems = useSelector((state: StoreState) => state.cartItemsSlice.items);
+  const cartItems = useSelector(
+    (state: StoreState) => state.cartItemsSlice.items
+  );
 
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [showLoginPromptModal, setShowLoginPromptModal] = useState(false);
@@ -56,9 +58,11 @@ const CardList: React.FC = () => {
           onClose={() => {
             dispatch(clearCartItems());
             setShowConfirmationModal(false);
+            clearCart(auth.user.uid);
           }}
           onContinueShopping={() => {
             dispatch(clearCartItems());
+            clearCart(auth.user.uid);
             router.push("/listing");
           }}
           orderNumber={generateOrderNumber()}
