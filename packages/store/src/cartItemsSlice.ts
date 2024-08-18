@@ -28,7 +28,6 @@ export const cartItemsSlice = createSlice({
       else{
         state.items[id] = {...action.payload};
       }
-      console.log(Object.keys(state.items).length);
       state.productCount = Object.keys(state.items).length;
     },
     setBulkCartItems: (state, action) => {

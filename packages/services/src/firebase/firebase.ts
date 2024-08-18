@@ -11,12 +11,10 @@ const firebaseConfig = {
     appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   };
   
-  console.log(process.env.NEXT_PUBLIC_FIREBASE_API_KEY);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app); 
 
-console.log({auth});
 export { auth, GoogleAuthProvider, signInWithPopup, db, doc, setDoc, getDoc };

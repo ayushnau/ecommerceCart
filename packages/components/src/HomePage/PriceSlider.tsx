@@ -9,14 +9,9 @@ import React, {
 interface PriceSliderInterface {
   min: number;
   max: number;
-  onChange: any;
 }
 
-const PriceSlider: React.FC<PriceSliderInterface> = ({
-  min,
-  max,
-  onChange,
-}) => {
+const PriceSlider: React.FC<PriceSliderInterface> = ({ min, max }) => {
   const [minVal, setMinVal] = useState(min);
   const [maxVal, setMaxVal] = useState(max);
   const minValRef = useRef(min);
@@ -47,10 +42,6 @@ const PriceSlider: React.FC<PriceSliderInterface> = ({
     }
   }, [maxVal, getPercent]);
 
-  useEffect(() => {
-    onChange({ min: minVal, max: maxVal });
-  }, [minVal, maxVal, onChange]);
-
   return (
     <div className="h-12 flex items-center justify-center z-10">
       <input
@@ -60,7 +51,6 @@ const PriceSlider: React.FC<PriceSliderInterface> = ({
         value={minVal}
         onChange={(event) => {
           const value = Math.min(Number(event.target.value), maxVal - 1);
-          console.log(event.target.value, ">>>");
           setMinVal(value);
           minValRef.current = value;
         }}

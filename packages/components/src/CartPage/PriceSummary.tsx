@@ -5,12 +5,6 @@ import { useSelector } from "react-redux";
 import { StoreState } from "store";
 import { formatNumber } from "utils";
 
-// Sample coupons list
-const coupons = [
-  { code: "SAVE10", type: "percent", value: 10 },  // 10% off
-  { code: "FLAT200", type: "fixed", value: 200 },  // ₹200 off
-];
-
 
 const PriceSummary = () => {
   const { items, productCount: count } = useSelector((state: StoreState) => {
@@ -79,9 +73,7 @@ const PriceSummary = () => {
     const response: any = await fetch(
       `${process.env.NEXT_PUBLIC_ENDPOINT}/api/coupons`
     );
-    console.log(response);
     const data = await response.json();
-    console.log({ data }, "check the coupun");
     setCoupons(data.data);
   };
   useEffect(() => {

@@ -19,7 +19,6 @@ import {
         email: user.email,
         profilePicture: user.photoURL,
       });
-      console.log({response},"asdf");
     } catch (error) {
       console.error("Error during Google Sign-In:", error);
     }

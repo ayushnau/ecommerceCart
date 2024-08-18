@@ -42,7 +42,7 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
           ...cardDetails,
         });
       } catch (error) {
-        throw Error(error);
+        throw error;
       }
     }
   };

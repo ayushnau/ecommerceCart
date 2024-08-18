@@ -8,25 +8,6 @@ import { filters } from "utils";
 
 interface SidebarInterface {}
 const Sidebar: React.FC<SidebarInterface> = () => {
-  // const [priceRange, setPriceRange] = useState([0, 10000]);
-
-  // const handlePriceChange = (newRange: any) => {
-  //   setPriceRange(newRange);
-  //   console.log("Price range:", newRange);
-  // };
-
-  // const check = async () => {
-  //   const response: any = await fetch(
-  //     `${process.env.NEXT_PUBLIC_ENDPOINT}/api/products`,
-  //     { method: "GET", cache: "force-cache" }
-  //   );
-  //   // const response = await fetch("https://dummyjson.com/products/search?q=watch");
-
-  //   const data = await response.json();
-  //   console.log({ data });
-  //   console.log(process.env.NEXT_PUBLIC_ENDPOINT, "localhost>>");
-  // };
-  // check();
   return (
     <div className=" primary-text-black w-[270px] shadow-boxShadow hidden xl:block self-start ">
       {/* Filters Title */}
@@ -55,9 +36,7 @@ const Sidebar: React.FC<SidebarInterface> = () => {
         <PriceSlider
           min={0}
           max={1000}
-          onChange={({ min, max }: { min: number; max: number }) =>
-            console.log(`min = ${min}, max = ${max}`)
-          }
+          
         />
       </div>
       <Divider color="#f0f0f0" className="m-0" />

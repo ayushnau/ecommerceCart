@@ -36,7 +36,6 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
     setIsAdded((prev) => !prev);
     const id: string = cardDetails.id;
     const quantity = currentQuantity ?? "0";
-    // console.log({ quantity });
     const newQuantity = `${parseInt(quantity) + addOrDeduct}`;
 
     dispatch(
