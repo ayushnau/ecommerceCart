@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import { twMerge } from "tailwind-merge";
 import { useSelector, useDispatch } from "react-redux";
 import { StoreState, setCartItem, removeCartItem } from "store";
 import { formatNumber } from "utils";
@@ -18,26 +17,39 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
   );
   const [isConfirmationModalOpen, setIsConfirmationModal] =
     useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
   const currentQuantity = useSelector((state: StoreState) => {
     const id: string = cardDetails.id;
     return state.cartItemsSlice.items[id]?.quantity;
   });
 
-  const handleQuantityChange = (value: "add" | "remove") => {
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id: string = cardDetails.id;
-    const addOrDeduct = value === "add" ? 1 : -1;
-    if (value === "remove" && currentQuantity === "1") {
-      setIsConfirmationModal(true);
-    } else {
+    const value = e.target.value;
+
+    if (/^\d+$/.test(value) && parseInt(value) > 0) {
+      setError(null);
       dispatch(
         setCartItem({
           id,
           ...cardDetails,
-          quantity: `${parseInt(currentQuantity) + addOrDeduct}`,
+          quantity: value,
         })
       );
+    } else if (value === "") {
+      setError("Quantity cannot be lesser than 1.");
+      dispatch(
+        setCartItem({
+          id,
+          ...cardDetails,
+          quantity: "1",
+        })
+      );
+    } else {
+      setError("Please enter a digit between 1 and 9.");
     }
   };
+
   const handleRemoveItem = () => {
     const id: string = cardDetails.id;
     dispatch(removeCartItem(id));
@@ -79,16 +91,31 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
         <div className="text-xs text-gray-500 mt-2">Saver Deal</div>
         <div className="flex items-center mt-4">
           <button
-            onClick={() => handleQuantityChange("remove")}
+            onClick={() =>
+              handleQuantityChange({
+                target: {
+                  value: `${parseInt(currentQuantity) - 1}`,
+                },
+              } as any)
+            }
             className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-600 text-sm font-medium rounded-l hover:bg-gray-300"
           >
             -
           </button>
-          <span className="w-16 h-8 flex items-center justify-center bg-gray-100 text-gray-900 text-sm font-medium">
-            {currentQuantity}
-          </span>
+          <input
+            type="text"
+            value={currentQuantity}
+            onChange={handleQuantityChange}
+            className="w-16 h-8 flex items-center justify-center bg-gray-100 text-gray-900 text-sm font-medium text-center outline-none"
+          />
           <button
-            onClick={() => handleQuantityChange("add")}
+            onClick={() =>
+              handleQuantityChange({
+                target: {
+                  value: `${parseInt(currentQuantity) + 1}`,
+                },
+              } as any)
+            }
             className="w-8 h-8 flex items-center justify-center bg-gray-200 text-gray-600 text-sm font-medium rounded-r hover:bg-gray-300"
           >
             +
@@ -100,6 +127,7 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
             Remove
           </button>
         </div>
+        {error && <div className="text-red-500 text-xs mt-2">{error}</div>}
         {isConfirmationModalOpen && (
           <ConfirmationModal
             onConfirm={handleRemoveItem}
