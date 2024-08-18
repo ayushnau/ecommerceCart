@@ -9,6 +9,7 @@ const nextConfig = {
       { hostname: "cdn.dummyjson.com" },
       { hostname: "static-assets-web.flixcart.com" },
       { hostname: "img.icons8.com" },
+      { hostname: "lh3.googleusercontent.com" },
     ],
   },
 };

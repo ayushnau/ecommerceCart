@@ -13,12 +13,10 @@ import storage from "redux-persist/lib/storage";
 
 
 //publication
-import publicationUserSlice from "./src/publication/publicationUserSlice";
 import cartItemsSlice from './src/cartItemsSlice'
 
 let reducers = combineReducers({
 	cartItemsSlice,
-	publicationUserSlice,
 });
 
 const persistConfig = {

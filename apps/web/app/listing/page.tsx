@@ -9,7 +9,7 @@ const Listing = async () => {
 
   return (
     <div className="p-4 flex items-center justify-center  overflow-scroll">
-      <div className="flex gap-x-[50px]">
+      <div className="flex gap-x-[50px] ">
         <Sidebar />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 overflow-scroll">
           {data.products.map((value: any) => {

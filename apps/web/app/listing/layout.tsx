@@ -13,7 +13,7 @@ export default function Layout({
 }>) {
   return (
     <div className="bg-[#F1F3F6] flex flex-col min-h-screen overflow-y-auto relative">
-      <div className="sticky top-0">
+      <div className="sticky top-0 z-50">
         <Navbar />
       </div>
       <div className="max-w-8xl mx-auto ">{children}</div>

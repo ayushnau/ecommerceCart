@@ -7,6 +7,8 @@ import Image from "next/image";
 import { MagnifyingGlassIcon, CartIcon, LoginIcon } from "icons";
 import { useSelector } from "react-redux";
 import { StoreState } from "store";
+import { DisclosureButton, DisclosurePanel } from "@headlessui/react";
+import { handleLogin, getUserData, handleLogout } from "services";
 
 function classNames(...classes: any): string {
   return classes.filter(Boolean).join(" ");
@@ -17,14 +19,52 @@ const Navbar = () => {
     return state.cartItemsSlice.items;
   });
   const [totalQuantity, setTotalQuantity] = useState(0);
+  const [userData, setUserData] = useState<any>({
+    name: "",
+    email: "",
+    profilePicture: "",
+  });
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Manage dropdown state
+
   useEffect(() => {
     const cartItemsList = cartItems ? Object.values(cartItems) : [];
-    console.log({ cartItemsList }, { cartItems });
     const quantity = cartItemsList.reduce((total, item) => {
       return total + Number(item.quantity);
     }, 0);
     setTotalQuantity(quantity);
   }, [cartItems]);
+
+  useEffect(() => {
+    handleGetUserData();
+  }, []);
+
+  const handleGetUserData = async () => {
+    try {
+      const response = await getUserData();
+      const { name, email, profilePicture } = response;
+      setUserData({ name, email, profilePicture });
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleLoginClick = async () => {
+    try {
+      await handleLogin();
+      await handleGetUserData();
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleLogoutClick = async () => {
+    try {
+      await handleLogout();
+      setUserData({ name: "", email: "", profilePicture: "" });
+    } catch (error) {
+      throw error;
+    }
+  };
 
   return (
     <Disclosure as="nav" className="bg-[#2874F0] shadow-boxShadow">
@@ -40,8 +80,8 @@ const Navbar = () => {
                       className="h-8 w-auto"
                       src="https://seeklogo.com/images/F/flipkart-logo-3F33927DAA-seeklogo.com.png"
                       alt="Flipkart"
-                      width={32} // Example width
-                      height={32} // Example height
+                      width={32}
+                      height={32}
                     />
                   </Link>
                 </div>
@@ -52,7 +92,6 @@ const Navbar = () => {
                       placeholder="Search for products, brands and more"
                       className="w-full p-2 pl-4 rounded-l-md rounded-r-md"
                     />
-
                     <button className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md">
                       <MagnifyingGlassIcon />
                     </button>
@@ -60,36 +99,60 @@ const Navbar = () => {
                 </div>
               </div>
 
-              {/* Desktop Search Bar */}
-
               {/* Desktop Profile and Cart Icons */}
-              <div className="items-center space-x-6 flex">
-                <div className="hidden sm:flex items-center">
-                  <Link
-                    href="/profile"
-                    className="flex items-center text-white"
-                  >
-                    <LoginIcon />
-                    <span className="ml-2">Login</span>
-                  </Link>
-                </div>
+              <div className="items-center space-x-3 flex">
                 <Link
                   href="/cart"
                   className="flex items-center text-white pr-2 relative"
                 >
                   <CartIcon />
                   <span className="ml-2">Cart</span>
-                  {totalQuantity > 0 ? (
+                  {totalQuantity > 0 && (
                     <span className="bg-red-600 rounded-full w-4 h-4 absolute -top-2 left-1 inline-flex items-center justify-center p-1 text-[11px] font-medium">
                       {totalQuantity}
                     </span>
-                  ) : null}
+                  )}
                 </Link>
+                <div className="hidden sm:flex items-center text-white relative">
+                  {userData.name ? (
+                    <div onMouseLeave={() => setDropdownOpen(false)}>
+                      <Image
+                        src={userData.profilePicture}
+                        width={30}
+                        height={30}
+                        alt="Profile Picture"
+                        className="rounded-full cursor-pointer"
+                        onClick={() => setDropdownOpen(!dropdownOpen)}
+                      />
+                      {dropdownOpen && (
+                        <div className="absolute top-5 right-0 mt-2 w-48 z-50 bg-white shadow-lg rounded-lg py-2">
+                          <div className="px-4 py-2 text-gray-700">
+                            {userData.name}
+                          </div>
+                          <button
+                            onClick={handleLogoutClick}
+                            className="w-full px-4 py-2 text-gray-700 hover:bg-gray-100 text-left"
+                          >
+                            Logout
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div
+                      onClick={handleLoginClick}
+                      className="pr-2 relative cursor-pointer"
+                    >
+                      <LoginIcon />
+                      <span className="ml-2">Login</span>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Mobile Menu Button */}
               <div className="-mr-2 flex sm:hidden">
-                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                <DisclosureButton className="relative inline-flex items-center justify-center rounded-md p-2 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                   <span className="absolute -inset-0.5" />
                   <span className="sr-only">Open main menu</span>
                   {open ? (
@@ -97,16 +160,15 @@ const Navbar = () => {
                   ) : (
                     <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
                   )}
-                </Disclosure.Button>
+                </DisclosureButton>
               </div>
             </div>
           </div>
 
           {/* Mobile Dropdown */}
-          <Disclosure.Panel className="sm:hidden">
+          <DisclosurePanel className="sm:hidden">
             <div className="space-y-3 px-2 pb-3 pt-2">
-              {/* Mobile Search Bar */}
-              <Disclosure.Button as="div" className="block">
+              <DisclosureButton as="div" className="block">
                 <div className="relative">
                   <input
                     type="text"
@@ -119,35 +181,21 @@ const Navbar = () => {
                     className="absolute right-0 top-0 h-full p-2 bg-yellow-400 text-gray-800 rounded-r-md"
                   >
                     <MagnifyingGlassIcon />
-                    {/* <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M21 21l-4.35-4.35M16.65 11a5.65 5.65 0 11-11.3 0 5.65 5.65 0 0111.3 0z"
-                      ></path>
-                    </svg> */}
                   </button>
                 </div>
-              </Disclosure.Button>
-
-              {/* Mobile Login Button */}
-              <Disclosure.Button
-                as={Link}
-                href="/profile"
-                className="block rounded-md hover:bg-blue-900 px-3 py-2 text-base font-medium text-white pt-2"
-              >
-                <LoginIcon />
-                Login
-              </Disclosure.Button>
+              </DisclosureButton>
+              <div className="block cursor-pointer rounded-md hover:bg-blue-900 px-3 py-2 text-base font-medium text-white pt-2">
+                {!userData.name ? (
+                  <span onClick={handleLoginClick}>
+                    <LoginIcon />
+                    Login
+                  </span>
+                ) : (
+                  <span onClick={handleLogoutClick}>Logout</span>
+                )}
+              </div>
             </div>
-          </Disclosure.Panel>
+          </DisclosurePanel>
         </>
       )}
     </Disclosure>

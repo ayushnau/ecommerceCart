@@ -1,3 +1,4 @@
-// publications changes
-export { register } from "./publicationsServices/register";
-export { login } from "./publicationsServices/login";
+export * from './src/firebase/firebase'
+export { handleLogin } from './src/firebase/handleLogin'
+export {getUserData} from './src/firebase/getUserData'
+export {handleLogout} from "./src/firebase/handleLogout"
