@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { setCartItem, StoreState } from "store";
 import { formatNumber } from "utils";
+import { addToCart, useAuth } from "services";
 
 interface ProductCardInterface {
   cardDetails: any;
@@ -17,6 +18,7 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
     cardDetails.images[0]
   );
   const dispatch = useDispatch();
+  const auth = useAuth();
   const currentQuantity = useSelector((state: StoreState) => {
     const id: string = cardDetails.id;
     return state.cartItemsSlice.items[id]?.quantity;
@@ -25,24 +27,36 @@ const ProductCard: React.FC<ProductCardInterface> = ({ cardDetails }) => {
     currentQuantity ? true : false
   );
 
-  const handleAddToCart = () => {
+  useEffect(() => {
+    setIsAdded(currentQuantity ? true : false);
+  }, [currentQuantity]);
+
+  const handleAddToCart = async () => {
     const addOrDeduct = isAdded ? -1 : 1;
     setIsAdded((prev) => !prev);
     const id: string = cardDetails.id;
     const quantity = currentQuantity ?? "0";
     // console.log({ quantity });
-    console.log("asdfasdfa", {
-      ...cardDetails,
-      id,
-      quantity23456654: `${parseInt(quantity) + addOrDeduct}`,
-    });
+    const newQuantity = `${parseInt(quantity) + addOrDeduct}`;
+
     dispatch(
       setCartItem({
         id,
-        quantity: `${parseInt(quantity) + addOrDeduct}`,
+        quantity: newQuantity,
         ...cardDetails,
       })
     );
+    if (auth.user) {
+      try {
+        await addToCart(auth.user.uid, {
+          id: `${id}`,
+          quantity: newQuantity,
+          ...cardDetails,
+        });
+      } catch (error) {
+        dispatch(setCartItem({ id, quantity: quantity, ...cardDetails }));
+      }
+    }
   };
   useEffect(() => {
     setSelectedImage(cardDetails.images[0]);

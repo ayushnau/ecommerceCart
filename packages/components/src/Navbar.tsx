@@ -59,6 +59,7 @@ const Navbar = () => {
   };
 
   const handleLogoutClick = async () => {
+    setDropdownOpen(false);
     try {
       await handleLogout();
       setUserData({ name: "", email: "", profilePicture: "" });

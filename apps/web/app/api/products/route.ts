@@ -1,7 +1,5 @@
 // pages/api/products.ts
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { NextResponse } from 'next/server';
-import {cache} from 'react'
 
 export async function GET() {
   try {

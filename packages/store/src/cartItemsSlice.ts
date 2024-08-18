@@ -31,6 +31,19 @@ export const cartItemsSlice = createSlice({
       console.log(Object.keys(state.items).length);
       state.productCount = Object.keys(state.items).length;
     },
+    setBulkCartItems: (state, action) => {
+      action.payload.map((value:any) =>{
+
+        const id = value.id;
+        if(value.quantity == "0"){
+          delete state.items[id];
+        }
+        else{
+          state.items[id] = {...value};
+        }
+      })
+      state.productCount = Object.keys(state.items).length;
+    },
 
     // Reducer to clear all cart items
     removeCartItem : (state, action: PayloadAction<string>) =>{
@@ -43,6 +56,6 @@ export const cartItemsSlice = createSlice({
   },
 });
 
-export const { setCartItem, clearCartItems, removeCartItem } = cartItemsSlice.actions;
+export const { setCartItem,setBulkCartItems, clearCartItems, removeCartItem } = cartItemsSlice.actions;
 
 export default cartItemsSlice.reducer;

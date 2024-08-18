@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { StoreState, setCartItem, removeCartItem } from "store";
 import { formatNumber } from "utils";
 import { ConfirmationModal } from "components";
+import { addToCart, useAuth } from "services";
 
 interface CartCardInterface {
   cardDetails: any;
@@ -18,33 +19,43 @@ const CartCard: React.FC<CartCardInterface> = ({ cardDetails }) => {
   const [isConfirmationModalOpen, setIsConfirmationModal] =
     useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+
   const currentQuantity = useSelector((state: StoreState) => {
     const id: string = cardDetails.id;
     return state.cartItemsSlice.items[id]?.quantity;
   });
 
+  const auth = useAuth();
+  const dispatchQuantity = async (value: any, id: any) => {
+    dispatch(
+      setCartItem({
+        id,
+        ...cardDetails,
+        quantity: value,
+      })
+    );
+    if (auth.user) {
+      try {
+        await addToCart(auth.user.uid, {
+          id: `${id}`,
+          quantity: value,
+          ...cardDetails,
+        });
+      } catch (error) {
+        throw Error(error);
+      }
+    }
+  };
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id: string = cardDetails.id;
     const value = e.target.value;
 
     if (/^\d+$/.test(value) && parseInt(value) > 0) {
       setError(null);
-      dispatch(
-        setCartItem({
-          id,
-          ...cardDetails,
-          quantity: value,
-        })
-      );
+      dispatchQuantity(value, id);
     } else if (value === "") {
       setError("Quantity cannot be lesser than 1.");
-      dispatch(
-        setCartItem({
-          id,
-          ...cardDetails,
-          quantity: "1",
-        })
-      );
+      dispatchQuantity("1", id);
     } else {
       setError("Please enter a digit between 1 and 9.");
     }
