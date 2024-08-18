@@ -6,9 +6,7 @@
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "preview": "turbo run preview",
-    "web:dev": "turbo run web#dev",
-    "backend:serve": "turbo run backend#serve",
-    "start": "npx run concurrently \"yarn web:dev\"  \"yarn backend:serve\""
+    "web:dev": "turbo run web#dev"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",
