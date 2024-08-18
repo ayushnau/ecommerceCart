@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Divider from "../../misc/Divider";
 import FilterCategory from "./FilterCategory";
 import PriceSlider from "./PriceSlider";
@@ -14,6 +14,19 @@ const Sidebar: React.FC<SidebarInterface> = () => {
   //   setPriceRange(newRange);
   //   console.log("Price range:", newRange);
   // };
+
+  // const check = async () => {
+  //   const response: any = await fetch(
+  //     `${process.env.NEXT_PUBLIC_ENDPOINT}/api/products`,
+  //     { method: "GET", cache: "force-cache" }
+  //   );
+  //   // const response = await fetch("https://dummyjson.com/products/search?q=watch");
+
+  //   const data = await response.json();
+  //   console.log({ data });
+  //   console.log(process.env.NEXT_PUBLIC_ENDPOINT, "localhost>>");
+  // };
+  // check();
   return (
     <div className=" primary-text-black w-[270px] shadow-boxShadow hidden xl:block self-start ">
       {/* Filters Title */}
