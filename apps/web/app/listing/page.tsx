@@ -5,16 +5,12 @@ import { StoreState } from "store";
 import axios from "axios";
 
 const Listing = async () => {
-  const data: any = await axios.get(
-    `http://localhost:3000/api/products`
-    // { method: "GET", cache: "force-cache" }
+  const response: any = await fetch(
+    `${process.env.NEXT_PUBLIC_ENDPOINT}/api/products`
   );
-  // const response = await fetch("https://dummyjson.com/products/search?q=watch");
 
-  // const data = await response.json();
-  console.log(data.data);
+  const data = await response.json();
   const products = data.data.products;
-  console.log(process.env.NEXT_PUBLIC_ENDPOINT, "localhost>>");
 
   return (
     <div className="p-4 flex items-center justify-center  overflow-scroll">

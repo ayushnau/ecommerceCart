@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { StoreState } from "store";
 import { DisclosureButton, DisclosurePanel } from "@headlessui/react";
 import { handleLogin, getUserData, handleLogout } from "services";
+import { twMerge } from "tailwind-merge";
 
 function classNames(...classes: any): string {
   return classes.filter(Boolean).join(" ");
@@ -103,7 +104,10 @@ const Navbar = () => {
               <div className="items-center space-x-3 flex">
                 <Link
                   href="/cart"
-                  className="flex items-center text-white pr-2 relative"
+                  className={twMerge(
+                    "flex items-center text-white pr-2 relative ",
+                    totalQuantity <= 0 ? "pointer-events-none" : ""
+                  )}
                 >
                   <CartIcon />
                   <span className="ml-2">Cart</span>

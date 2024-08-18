@@ -1,45 +1,56 @@
 "use client";
+
 import React, { useState } from "react";
 import CartCard from "./CartCard";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { clearCartItems, StoreState } from "store";
 import OrderConfirmationModal from "../../misc/OrderConfirmtionModal";
-import { useDispatch } from "react-redux";
+import LoginPromptModal from "../../misc/LoginPromptModal";
 import { useRouter } from "next/navigation";
+import { useAuth } from "services";
 
-const CardList: React.FC = ({}) => {
+const CardList: React.FC = () => {
   const dispatch = useDispatch();
   const router = useRouter();
-  const cartItems = useSelector((state: StoreState) => {
-    return state.cartItemsSlice.items;
-  });
-  if (!cartItems || Object.keys(cartItems).length == 0) {
+  const auth = useAuth();
+  const cartItems = useSelector((state: StoreState) => state.cartItemsSlice.items);
+
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+  const [showLoginPromptModal, setShowLoginPromptModal] = useState(false);
+
+  if (!cartItems || Object.keys(cartItems).length === 0) {
     router.push("/listing");
+    return null;
   }
-  const [showConfirmationModal, setShowConfirmationModal] =
-    useState<boolean>(false);
+
   const generateOrderNumber = (): string => {
     const timestamp = Date.now();
-    const randomPart = Math.floor(100000 + Math.random() * 900000); // Random 6-digit number
+    const randomPart = Math.floor(100000 + Math.random() * 900000);
     return `${timestamp}-${randomPart}`;
+  };
+
+  const handlePlaceOrderClick = () => {
+    if (!auth.user) {
+      setShowLoginPromptModal(true);
+    } else {
+      setShowConfirmationModal(true);
+    }
   };
 
   return (
     <div>
-      {Object.values(cartItems).map((value: any) => {
-        return (
-          <CartCard key={`${value.id}${value.title}`} cardDetails={value} />
-        );
-      })}
+      {Object.values(cartItems).map((value: any) => (
+        <CartCard key={`${value.id}${value.title}`} cardDetails={value} />
+      ))}
       <div
-        onClick={() => setShowConfirmationModal(true)}
+        onClick={handlePlaceOrderClick}
         className="ml-auto py-4 px-4 shadow-boxShadow flex items-center justify-end"
       >
         <button className="bg-[#fb641b] rounded px-5 py-2 text-white shadow-boxShadow text-lg font-bold">
           Place order
         </button>
       </div>
-      {showConfirmationModal ? (
+      {showConfirmationModal && (
         <OrderConfirmationModal
           isOpen={showConfirmationModal}
           onClose={() => {
@@ -52,7 +63,13 @@ const CardList: React.FC = ({}) => {
           }}
           orderNumber={generateOrderNumber()}
         />
-      ) : null}
+      )}
+      {showLoginPromptModal && (
+        <LoginPromptModal
+          isOpen={showLoginPromptModal}
+          onClose={() => setShowLoginPromptModal(false)}
+        />
+      )}
     </div>
   );
 };
