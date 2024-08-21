@@ -3,7 +3,7 @@
 ## Checkout the demo here:
 https://youtu.be/bJRqU4tQ8IY
 
-This is an e-commerce application built using Next.js, Redux, Firebase and Tailwind
+This is an e-commerce application built using Next.js, Redux, Firebase, Turborepo  and Tailwind
 
 ## Features
 
